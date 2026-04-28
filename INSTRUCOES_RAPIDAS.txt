@@ -1,0 +1,119 @@
+================================================================================
+  RECOVER ENERGIA - DASHBOARD CRM COM LOGIN POR EMAIL/SENHA
+================================================================================
+
+O QUE FOI FEITO?
+================
+
+✅ Autenticação por Email/Senha - Substituiu OAuth por um sistema simples
+✅ Página de Login - Interface limpa para fazer login no dashboard
+✅ Dashboard CRM - Gerenciar leads com status (novo, contatado, qualificado, convertido)
+✅ Pronto para Vercel - Configurado para deploy direto
+
+CREDENCIAIS DE ACESSO
+=====================
+
+Email: recoverenergiasite@gmail.com
+Senha: recover0287
+
+COMO USAR LOCALMENTE
+====================
+
+1. Extrair o projeto:
+   unzip recover-energia-final.zip
+   cd recover-energia
+
+2. Instalar dependências:
+   pnpm install
+
+3. Configurar banco de dados (.env):
+   DATABASE_URL=mysql://user:password@host:3306/database_name
+   JWT_SECRET=seu-secret-super-seguro-aqui
+   GOOGLE_SHEETS_WEBHOOK_URL=sua-url-webhook
+   BUILT_IN_FORGE_API_URL=sua-url-api
+   BUILT_IN_FORGE_API_KEY=sua-chave-api
+
+4. Executar migrações:
+   pnpm db:push
+
+5. Criar usuário admin:
+   npx tsx scripts/init-admin.ts
+
+6. Iniciar em desenvolvimento:
+   pnpm dev
+
+   Acesse: http://localhost:5173/login
+
+COMO FAZER DEPLOY NO VERCEL
+============================
+
+1. Fazer push do código:
+   git add .
+   git commit -m "Add email/password authentication"
+   git push
+
+2. Conectar ao Vercel:
+   - Acesse https://vercel.com
+   - Clique em "New Project"
+   - Selecione seu repositório
+
+3. Configurar Variáveis de Ambiente no painel do Vercel:
+   - DATABASE_URL: URL do seu banco MySQL
+   - JWT_SECRET: Um secret seguro
+   - GOOGLE_SHEETS_WEBHOOK_URL: URL do webhook
+   - BUILT_IN_FORGE_API_URL: URL da API
+   - BUILT_IN_FORGE_API_KEY: Chave da API
+
+4. Deploy:
+   Clique em "Deploy" - pronto!
+
+ROTAS DISPONÍVEIS
+=================
+
+/                - Landing page (público)
+/login          - Página de login (público)
+/dashboard      - Dashboard CRM (requer autenticação)
+/thank-you      - Página de agradecimento (público)
+
+ENDPOINTS DA API
+================
+
+POST   /api/auth/login              - Fazer login
+GET    /api/trpc/auth.me            - Obter usuário atual
+POST   /api/trpc/auth.logout        - Fazer logout
+GET    /api/trpc/leads.list         - Listar leads (admin)
+POST   /api/trpc/leads.update       - Atualizar lead (admin)
+
+ARQUIVOS IMPORTANTES
+====================
+
+SETUP_LOGIN.md  - Documentação detalhada do sistema de login
+CHANGES.md      - Lista completa de mudanças realizadas
+package.json    - Dependências do projeto (inclui bcryptjs)
+
+SEGURANÇA
+=========
+
+✅ Senhas hasheadas com bcryptjs (10 rounds)
+✅ Tokens JWT com expiração
+✅ Cookies httpOnly em produção
+✅ Proteção CSRF
+
+TROUBLESHOOTING
+===============
+
+"Email ou senha inválidos"
+  → Verifique se executou: npx tsx scripts/init-admin.ts
+  → Confirme as credenciais
+
+"Database not available"
+  → Verifique se DATABASE_URL está configurada no .env
+  → Teste a conexão com o banco de dados
+
+"JWT verification failed"
+  → Regenere o JWT_SECRET
+  → Limpe cookies do navegador
+
+================================================================================
+Pronto para usar! Acesse o dashboard em: /login
+================================================================================
